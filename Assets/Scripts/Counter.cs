@@ -6,11 +6,13 @@ using UnityEngine.Events;
 public class Counter : MonoBehaviour
 {
     [SerializeField] private int _countPerTime;
+
     private int _totalCount = 0;
     private bool _isCounting;
     private Coroutine _countingCoroutine;
+    private WaitForSeconds _countingWaitForSeconds = new WaitForSeconds(0.5f);
 
-    public event UnityAction<int> OnTotalCountChanged;
+    public event UnityAction<int> TotalCountChanged;
 
     private void Update()
     {
@@ -19,7 +21,7 @@ public class Counter : MonoBehaviour
             if (!_isCounting)
             {
                 _isCounting = true;
-                _countingCoroutine = StartCoroutine(CountCorutine());
+                _countingCoroutine = StartCoroutine(Counting());
             }
             else
             {
@@ -29,13 +31,13 @@ public class Counter : MonoBehaviour
         }
     }
 
-    private IEnumerator CountCorutine()
+    private IEnumerator Counting()
     {
         while (_isCounting)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return _countingWaitForSeconds;
             _totalCount++;
-            OnTotalCountChanged?.Invoke(_totalCount);
+            TotalCountChanged?.Invoke(_totalCount);
         }
     }
 }

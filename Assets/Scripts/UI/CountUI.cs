@@ -16,12 +16,12 @@ public class CountUI : MonoBehaviour
 
     private void OnEnable()
     {
-        _counter.OnTotalCountChanged += UpdateCounterText;
+        _counter.TotalCountChanged += UpdateCounterText;
     }
 
     private void OnDisable()
     {
-        _counter.OnTotalCountChanged += UpdateCounterText;
+        _counter.TotalCountChanged += UpdateCounterText;
     }
 
     void UpdateCounterText(int count)
